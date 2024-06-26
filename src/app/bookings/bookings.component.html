@@ -1,0 +1,258 @@
+<p>bookings works!</p>
+
+{{bookingForm.value | json}}
+
+<div>
+    <button mat-flat-button (click)="addPassport()" type="button">Add Passport</button>
+    <button mat-flat-button (click)="removePassport()" type="button">Remove Passport</button>
+</div>
+
+<!-- syntax to create reactive Forms -->
+<form class = "example-form" [formGroup]="bookingForm" (ngSubmit)="addBooking()">
+    <mat-form-field class="example-full-width" *ngIf = "bookingForm.get('passport')">
+        <mat-label>Passport Number</mat-label>
+        <!-- formControlName is used within a formGroup to bind a form control to a specific element. -->
+        <input type="text" matInput formControlName="passport"
+               placeholder="4002176">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>BookingID</mat-label>
+        <!-- formControlName is used within a formGroup to bind a form control to a specific element. -->
+        <input type="text" matInput formControlName="bookingId"
+               placeholder="12">
+        <!--<mat-hint>Errors appear instantly!</mat-hint>
+        @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+          <mat-error>Please enter a valid email address</mat-error>
+        }
+        @if (emailFormControl.hasError('required')) {
+          <mat-error>Email is <strong>required</strong></mat-error>
+    } -->
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>RoomID</mat-label>
+        <input type="text" matInput formControlName="roomId"
+                placeholder="12">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="guestEmail"
+                placeholder="sam@gmail.com">
+        @if (bookingForm.get(['guestEmail'])?.hasError('required') && bookingForm.get(['guestEmail'])?.dirty) {
+            <mat-error>Please enter the email address</mat-error>
+        }
+        @if (bookingForm.get(['guestEmail'])?.hasError('email')) {
+            <mat-error>Please enter the valid email address</mat-error>
+        }
+    </mat-form-field>
+
+    @if(this.bookingForm.errors?.['dateError']) {
+        <div class="alert alert-danger">
+            Please enter Valid Dates
+        </div>
+      }
+      
+
+    <mat-form-field class = "example-full-width">
+        <mat-label>checkinDate</mat-label>
+        <input matInput [matDatepicker]="picker1" formControlName = "checkinDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        @if(bookingForm.get('checkinDate')?.hasError('required') && bookingForm.get('checkinDate')?.dirty) {
+            <mat-error>Please enter the checkin date</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field class = "example-full-width">
+        <mat-label>checkoutDate</mat-label>
+        <input matInput [matDatepicker]="picker2" formControlName = "checkoutDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Booking Status</mat-label>
+        <input type="text" matInput formControlName="bookingStatus"
+                placeholder="Pending">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Booking Amount</mat-label>
+        <input type="number" matInput formControlName="bookingAmount"
+                placeholder="10000">
+    </mat-form-field>
+
+
+    <mat-form-field class = "example-full-width">
+        <mat-label>BookingDate</mat-label>
+        <input matInput [matDatepicker]="picker3" formControlName = "bookingDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>MobileNumber</mat-label>
+        <input type="number" matInput formControlName="mobileNumber"
+                placeholder="8585189670">
+    </mat-form-field>
+
+    {{bookingForm.get('guestName')?.errors | json}}
+
+    <mat-form-field class="example-full-width">
+        <mat-label>GuestName</mat-label>
+        <input type="text" matInput formControlName="guestName"
+                placeholder="John Doe">
+        @if (bookingForm.get('guestName')?.hasError('required') && bookingForm.get('guestName')?.dirty) {
+            <mat-error>Please enter the guest name</mat-error>
+        }
+        @if (bookingForm.get('guestName')?.hasError('minlength')) {
+            <mat-error>Guest name should be of minimum length of 3 characters</mat-error>
+        }
+    </mat-form-field>
+
+    <div formGroupName="address">
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title> Address </mat-panel-title>
+                <mat-panel-description> Add Guest Adress </mat-panel-description>
+              </mat-expansion-panel-header>
+              
+              <mat-form-field class="example-full-width">
+                <mat-label>Address Line1</mat-label>
+                <input type="text" matInput formControlName="addressLine1"
+                        placeholder="3131 somewhere street">
+                @if (bookingForm.get('address.addressLine1')?.hasError('required') && bookingForm.get('address.addressLine1')?.dirty) {
+                    <mat-error>Please enter the Address line1</mat-error>
+                }
+               </mat-form-field>
+
+               <mat-form-field class="example-full-width">
+                <mat-label>Address Line2</mat-label>
+                <input type="text" matInput formControlName="addressLine2"
+                        placeholder="La Jolla">
+               </mat-form-field>
+
+
+               <mat-form-field class="example-full-width">
+                <mat-label>City</mat-label>
+                <input type="text" matInput formControlName="city"
+                        placeholder="San Diego">
+               </mat-form-field>
+
+
+               <mat-form-field class="example-full-width">
+                <mat-label>State</mat-label>
+                <input type="text" matInput formControlName="state"
+                        placeholder="CA">
+               </mat-form-field>
+
+
+               <mat-form-field class="example-full-width">
+                <mat-label>Country</mat-label>
+                <input type="text" matInput formControlName="country"
+                        placeholder="USA">
+               </mat-form-field>
+
+               <mat-form-field class="example-full-width">
+                <mat-label>Zip Code</mat-label>
+                <input type="text" matInput formControlName="zipCode"
+                        placeholder="92037">
+               </mat-form-field>
+
+            </mat-expansion-panel>
+            
+          </mat-accordion>
+    </div>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Guest Count</mat-label>
+        <input type="number" matInput formControlName="guestCount"
+                placeholder="3">
+       </mat-form-field>
+
+    <div>
+            <!--Need to specify that this is not of type "submit"-->
+            <button mat-flat-button type="button" (click)="addGuest()">Add Guest</button>
+    </div>
+
+    <div formArrayName="guests">
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title> Guests </mat-panel-title>
+                <mat-panel-description> Add Guest Details </mat-panel-description>
+              </mat-expansion-panel-header>
+                <div *ngFor="let guest of guests.controls; let i = index">
+                    <div [formGroupName]="i">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Guest Name</mat-label>
+                            <input type="text" matInput formControlName="guestName"
+                                    placeholder="John Doe">
+                            @if (bookingForm.get(['guests', i, 'guestName'])?.hasError('required') && bookingForm.get(['guests', i, 'guestName'])?.dirty) {
+                                <mat-error>Please enter the guest name</mat-error>
+                            }
+                            @if (bookingForm.get(['guests', i, 'guestName'])?.hasError('minlength')) {
+                                <mat-error>Guest name should be of minimum length of 3 characters</mat-error>
+                            }
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Guest Email</mat-label>
+                            <input type="text" matInput formControlName="guestEmail"
+                                    placeholder="John Doe">
+                            @if (bookingForm.get(['guests', i, 'guestEmail'])?.hasError('required') && bookingForm.get(['guests', i, 'guestEmail'])?.dirty) {
+                                <mat-error>Please enter the email address</mat-error>
+                            }
+                            @if (bookingForm.get(['guests', i, 'guestEmail'])?.hasError('email')) {
+                                <mat-error>Please enter the valid email address</mat-error>
+                            }
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Age</mat-label>
+                            <input type="number" matInput formControlName="age"
+                                    placeholder="John Doe">
+                            @if (bookingForm.get(['guests', i, 'age'])?.hasError('required') && bookingForm.get(['guests', i, 'age'])?.dirty) {
+                                <mat-error>Please enter the age</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button mat-flat-button type="button" (click)="removeGuest(i)">Remove Guest</button>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+
+    <div>
+        <!-- By default submit button since (ngSubmit) mentioned above-->
+        <button mat-flat-button [disabled]="bookingForm.invalid">Book Room</button>
+    </div>
+    
+
+    <!--export class Booking {
+        bookingId: string;
+        roomId: string;
+        guestEmail: string;
+        checkinDate: Date;
+        checkoutDate: Date;
+        bookingStatus: string;
+        bookingAmount: number;
+        bookingDate: Date;
+        mobileNumber: string;
+        guestName: string;
+        guestAddress: string;
+        guestCity: string;
+        guestState: string;
+        guestCountry: string;
+        guestZipCode: string;
+        guestCount: number;
+        guestList: []
+}-->
+</form>

@@ -1,0 +1,28 @@
+<form #loginForm = "ngForm">
+    <div class = "form-group">
+        <input hinvHover required class = "form-control" type="text" name = "email" placeholder="Enter your Email"
+         [(ngModel)] = "userLogin.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" 
+         #emailControl="ngModel" />
+         <!--email control -->
+         <div *ngIf="emailControl.errors?.['required'] && emailControl.dirty" class="alert alert-danger">
+            Email is required.
+          </div>
+          <div *ngIf="emailControl.errors?.['pattern'] && emailControl.dirty" class="alert alert-danger">
+            Please enter a valid email address.
+          </div>
+    </div>
+    <div class = "form-group">
+        <input hinvHover hinvPasswordValidator color="lightblue" required class = "form-control" type="text" 
+        name = "password" placeholder="Enter your Password" [(ngModel)] = "userLogin.password" #passwordControl = "ngModel" />
+        <div *ngIf = "passwordControl.errors?.['required'] && passwordControl.dirty" class="alert alert-danger">
+            Password is required.
+        </div>
+        <div *ngIf= "passwordControl.dirty && passwordControl.errors?.['invalidPassword']" class = "alert alert-danger">
+            {{passwordControl.errors?.['message']}}
+        </div>
+    </div>
+
+    <div>
+        <button [disabled] = "loginForm.invalid" class = "btn btn-primary" (click) = "login(loginForm)">Login</button>
+    </div>
+</form>

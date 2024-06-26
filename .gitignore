@@ -1,5 +1,4 @@
 # compiled output
-hotelapi/dist
-hotelapi/node_modules
-hotelinventoryapp/dist
-hotelinventoryapp/node_modules
+
+dist/
+node_modules/

@@ -1,0 +1,57 @@
+
+<!--<h2>Welcome to {{hotelName}}</h2> -->
+<hinv-header></hinv-header>
+<!--<div *ngIf = "hideRooms">
+    Number of rooms :
+    <div [innerText] = "numberOfRooms"></div>
+</div>
+<button (click) = "toggle()">Toggle me!</button> -->
+<router-outlet></router-outlet>
+
+
+<div *ngIf = "selectedRoom!==undefined">
+    <h3>Selected Room</h3>
+    <div>
+        {{selectedRoom | json}}
+    </div>
+</div>
+
+
+<div *ngIf = "hideRooms">
+    <div>
+        <button class = "btn btn-primary" [routerLink] = "['/rooms/add']">Add Room</button>
+    </div>
+
+    {{priceFilter.value}}
+    <div>
+        <input type = "number" class = "form-control" placeholder = "price" [formControl] = "priceFilter" />
+    </div>
+
+    <div *ngIf = "roomsInfo.availableRooms!==undefined else loading">
+        <div>
+        <h3>{{roomsCount$ | async}} rooms are available</h3>
+        </div>
+
+        <div>
+            <hinv-rooms-table [rooms] = "rooms$ | async" [filterPrice]="priceFilter.value || 0" (selectedRoom)="selectRoom($event)"></hinv-rooms-table>
+            <!--<hinv-rooms-table [rooms] = "rooms$ | async" (selectedRoom)="selectRoom($event)"></hinv-rooms-table>-->
+        </div>
+    </div>
+    <ng-template #loading>
+        <div>No rooms Available</div>
+    </ng-template> 
+    <div>
+        <button class = "btn btn-primary" (click) = "getAllRooms()">Get All Rooms</button>
+    </div> 
+</div>
+
+<div>
+    <button class = "btn btn-primary" (click) = "toggle()">Show/Hide</button>
+    <button class = "btn btn-primary" (click) = "editRoom()">Edit Room</button>
+    <button class = "btn btn-primary" (click) = "deleteRoom()">Delete Room</button>
+</div>
+
+<h1>
+    {{totalBytes}} Bytes loaded!
+</h1>
+
